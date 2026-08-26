@@ -1,0 +1,12 @@
+{
+  "product_name": "EcoCharge Pro",
+  "product_description": "A portable solar power bank with 20000mAh capacity, waterproof, and built-in LED flashlight",
+  "platform": "Instagram",
+  "tone": "Eco-conscious",
+  "target_audience": "Outdoor enthusiasts and eco-friendly travelers",
+  "character_limit": 2200,
+  "call_to_action": "Shop now and go green",
+  "temperature": 0.8,
+  "top_p": 0.9,
+  "max_tokens": 500
+}

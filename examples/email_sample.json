@@ -1,0 +1,12 @@
+{
+  "product_name": "FitTrack Wearable",
+  "product_description": "Advanced fitness tracker with heart rate monitoring, sleep analysis, and 14-day battery life",
+  "platform": "Email",
+  "tone": "Persuasive",
+  "target_audience": "Health-conscious professionals aged 25-45",
+  "character_limit": 5000,
+  "call_to_action": "Order now with 20% off",
+  "temperature": 0.9,
+  "top_p": 0.95,
+  "max_tokens": 700
+}

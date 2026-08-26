@@ -1,0 +1,64 @@
+{
+  "requests": [
+    {
+      "product_name": "EcoCharge Pro",
+      "product_description": "A portable solar power bank with 20000mAh capacity, waterproof, and built-in LED flashlight",
+      "platform": "Instagram",
+      "tone": "Eco-conscious",
+      "target_audience": "Outdoor enthusiasts and eco-friendly travelers",
+      "character_limit": 2200,
+      "call_to_action": "Shop now and go green",
+      "temperature": 0.8,
+      "top_p": 0.9,
+      "max_tokens": 500
+    },
+    {
+      "product_name": "DataSync Enterprise",
+      "product_description": "Real-time data synchronization platform for enterprise teams with AI-powered conflict resolution",
+      "platform": "LinkedIn",
+      "tone": "Professional",
+      "target_audience": "CTOs and engineering leaders",
+      "character_limit": 3000,
+      "call_to_action": "Request a demo today",
+      "temperature": 0.4,
+      "top_p": 0.7,
+      "max_tokens": 600
+    },
+    {
+      "product_name": "FitTrack Wearable",
+      "product_description": "Advanced fitness tracker with heart rate monitoring, sleep analysis, and 14-day battery life",
+      "platform": "Email",
+      "tone": "Persuasive",
+      "target_audience": "Health-conscious professionals aged 25-45",
+      "character_limit": 5000,
+      "call_to_action": "Order now with 20% off",
+      "temperature": 0.9,
+      "top_p": 0.95,
+      "max_tokens": 700
+    },
+    {
+      "product_name": "CloudVault Secure",
+      "product_description": "Military-grade encrypted cloud storage with zero-knowledge architecture",
+      "platform": "LinkedIn",
+      "tone": "Professional",
+      "target_audience": "CISOs and security professionals",
+      "character_limit": 3000,
+      "call_to_action": "Start your free trial",
+      "temperature": 0.5,
+      "top_p": 0.8,
+      "max_tokens": 500
+    },
+    {
+      "product_name": "AdventurePack 40L",
+      "product_description": "Ultralight hiking backpack with waterproof compartments and ergonomic support system",
+      "platform": "Instagram",
+      "tone": "Adventurous",
+      "target_audience": "Hikers, backpackers, and weekend warriors",
+      "character_limit": 2200,
+      "call_to_action": "Gear up for your next adventure",
+      "temperature": 1.1,
+      "top_p": 0.9,
+      "max_tokens": 500
+    }
+  ]
+}

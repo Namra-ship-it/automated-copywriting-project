@@ -1,0 +1,41 @@
+{
+  "LinkedIn": {
+    "format": "Professional paragraph with optional bullet points",
+    "style": "Use industry keywords, formal structure, value-driven narrative. Data-driven and authoritative tone.",
+    "char_limit": 3000,
+    "guidelines": [
+      "Start with a strong hook related to industry impact",
+      "Use 1-2 bullet points for key benefits if space allows",
+      "Include relevant industry terminology",
+      "Maintain professional, authoritative voice",
+      "End with clear CTA"
+    ]
+  },
+  "Instagram": {
+    "format": "Short paragraphs with line breaks + 3-5 emojis",
+    "style": "Casual, visual storytelling, conversational. Keep sentences short and punchy.",
+    "char_limit": 2200,
+    "guidelines": [
+      "Use 3-5 relevant emojis naturally throughout the text",
+      "Keep sentences under 15 words when possible",
+      "Use line breaks every 2-3 sentences for readability",
+      "Include 3-5 relevant hashtags at the end",
+      "Visual and emotional storytelling approach",
+      "Hashtags must be relevant to product and audience"
+    ]
+  },
+  "Email": {
+    "format": "Structured with Subject Line, greeting, body, bullet points, CTA, signature",
+    "style": "Professional yet personable, clear structure, actionable content.",
+    "char_limit": 5000,
+    "guidelines": [
+      "Start with compelling subject line (under 60 characters)",
+      "Use personalized greeting",
+      "Body should be 2-3 short paragraphs",
+      "Use bullet points for key features/benefits",
+      "Clear, prominent CTA button/text",
+      "Professional signature block",
+      "Subject line must be non-null and included in output"
+    ]
+  }
+}

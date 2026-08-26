@@ -1,0 +1,37 @@
+DECODELABS BRAND SAFETY & VOICE GUIDELINES
+
+=== DO's ===
+1. DO use clear, concise language that respects the reader's time
+2. DO focus on tangible benefits and real-world applications
+3. DO use active voice and strong verbs
+4. DO maintain consistency in terminology and style
+5. DO include specific, verifiable claims when possible
+6. DO address the audience directly ("you", "your")
+7. DO create a sense of urgency without pressure
+8. DO proofread for grammar, spelling, and punctuation
+
+=== DON'Ts ===
+1. DON'T use superlatives without evidence ("best", "perfect", "unbeatable", "revolutionary")
+2. DON'T make medical, financial, or legal claims without disclaimers
+3. DON'T use clickbait tactics or misleading headlines
+4. DON'T include discriminatory, offensive, or inappropriate content
+5. DON'T copy or closely paraphrase competitor messaging
+6. DON'T use excessive jargon without explanation
+7. DON'T create false scarcity or fake urgency
+8. DON'T use ALL CAPS for emphasis (use sparingly if at all)
+9. DON'T include unverified statistics or data
+10. DON'T use generic filler phrases ("In today's world...", "We are excited to announce...")
+
+=== TONE ADAPTATION ===
+- Professional: Authoritative, data-backed, industry-aware
+- Casual: Conversational, friendly, approachable
+- Persuasive: Benefit-focused, emotionally resonant, action-oriented
+- Humorous: Witty, lighthearted, never mean-spirited
+- Inspirational: Uplifting, motivational, aspirational
+- Eco-conscious: Sustainability-focused, mindful, responsible
+- Adventurous: Bold, energetic, exploration-oriented
+
+=== PLATFORM VOICE ===
+- LinkedIn: Expert, thought-leader, industry insider
+- Instagram: Visual storyteller, lifestyle curator, authentic friend
+- Email: Trusted advisor, personal connection, helpful guide

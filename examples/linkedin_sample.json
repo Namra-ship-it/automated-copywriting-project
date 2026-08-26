@@ -1,0 +1,12 @@
+{
+  "product_name": "DataSync Enterprise",
+  "product_description": "Real-time data synchronization platform for enterprise teams with AI-powered conflict resolution",
+  "platform": "LinkedIn",
+  "tone": "Professional",
+  "target_audience": "CTOs and engineering leaders",
+  "character_limit": 3000,
+  "call_to_action": "Request a demo today",
+  "temperature": 0.4,
+  "top_p": 0.7,
+  "max_tokens": 600
+}

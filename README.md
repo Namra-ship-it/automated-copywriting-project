@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Automated Copywriting & Tone Transformer
 
 A production-ready Python application that automatically generates professional, platform-optimized marketing copy using the DeepSeek API. Transform raw product descriptions into tailored content for LinkedIn, Instagram, and Email with controllable tone, temperature, and creativity.
@@ -239,3 +240,6 @@ MIT License - See LICENSE file for details.
 ## Support
 
 For issues, questions, or contributions, please refer to the project documentation in `docs/` or open an issue on the project repository.
+=======
+# automated-copywriting-project
+>>>>>>> bb3bad61115652f2d8aab5bde4efc9d476cd5062

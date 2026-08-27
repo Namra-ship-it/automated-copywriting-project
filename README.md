@@ -1,147 +1,393 @@
-<<<<<<< HEAD
-# Automated Copywriting & Tone Transformer
+# ✍️ Automated Copywriting & Tone Transformer
 
-A production-ready Python application that automatically generates professional, platform-optimized marketing copy using the DeepSeek API. Transform raw product descriptions into tailored content for LinkedIn, Instagram, and Email with controllable tone, temperature, and creativity.
+> **AI-powered marketing copy generation with platform optimization, tone control, validation, async processing, and batch generation.**
 
----
+An intelligent Python-based copywriting system that transforms raw product information into **platform-specific, audience-aware marketing content**.
 
-## Features
-
-- **Multi-Platform Support**: Generate copy optimized for LinkedIn, Instagram, and Email
-- **Tone Control**: Professional, Casual, Persuasive, Humorous, Inspirational, Eco-conscious, Adventurous
-- **Gemini AI Integration**: Powered by Gemini's advanced language models via OpenAI-compatible API
-- **Async Processing**: Handle multiple requests concurrently with configurable semaphore limits
-- **Batch Processing**: Process hundreds of requests from JSON input files
-- **Exponential Backoff**: Intelligent retry logic with jitter for resilient API calls
-- **Pydantic Validation**: Strict input/output validation with detailed error reporting
-- **Brand Safety**: Enforced guidelines prevent exaggerated claims and inappropriate content
-- **CLI Interface**: Interactive, real-time, and batch modes via command-line
-- **Comprehensive Logging**: Structured logging with Loguru for all operations
+The system uses Google's Gemini API to generate copy for platforms such as **LinkedIn, Instagram, and Email**, while applying configurable tones, character limits, CTAs, brand-safety rules, validation, retry handling, and structured output.
 
 ---
 
-## Architecture
+## 🚀 What It Does
 
-```
-┌─────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   CLI /     │────▶│  CopyRequest    │────▶│ PromptBuilder   │
-│  Batch JSON │     │  (Pydantic)     │     │  (Template +    │
-└─────────────┘     └─────────────────┘     │  Platform Rules)│
-                                            └────────┬────────┘
-                                                     │
-                                            ┌────────▼────────┐
-                                            │  AsyncHandler   │
-                                            │  (Semaphore +   │
-                                            │   Backoff)      │
-                                            └────────┬────────┘
-                                                     │
-                                            ┌────────▼────────┐
-                                            │  Gemini API   │
-                                            │  (OpenAI SDK)   │
-                                            └────────┬────────┘
-                                                     │
-                                            ┌────────▼────────┐
-                                            │  CopyValidator  │
-                                            │  (Platform +    │
-                                            │   Brand Rules)  │
-                                            └────────┬────────┘
-                                                     │
-                                            ┌────────▼────────┐
-                                            │  CopyResponse   │
-                                            │  (JSON Output)  │
-                                            └─────────────────┘
+Instead of manually rewriting the same product description for every platform, this system automates the process:
+
+```text
+Product Information
+        ↓
+Request Validation
+        ↓
+Prompt Construction
+        ↓
+Gemini AI Generation
+        ↓
+Platform & Brand Validation
+        ↓
+Structured Marketing Copy
 ```
 
+Give it:
+
+* Product name
+* Product description
+* Target audience
+* Platform
+* Tone
+* CTA
+* Generation parameters
+
+And it produces ready-to-use marketing copy.
+
 ---
 
-## Installation
+## ✨ Key Features
 
-### Prerequisites
+### 🎯 Multi-Platform Copy Generation
 
-- Python 3.10+
-- Gemini API key
+Generate content optimized for:
 
-### Quick Setup
+* 💼 LinkedIn
+* 📸 Instagram
+* 📧 Email
+
+Each platform can apply its own formatting and content requirements.
+
+### 🎨 Tone Control
+
+Supported tones include:
+
+* Professional
+* Casual
+* Persuasive
+* Humorous
+* Inspirational
+* Eco-conscious
+* Adventurous
+
+### 🤖 Gemini AI Integration
+
+Uses Google's Gemini models for AI-powered content generation.
+
+The model can be configured through environment variables, making it easy to switch models without modifying the application logic.
+
+### ⚡ Asynchronous Processing
+
+Uses asynchronous request handling with configurable concurrency limits.
+
+This allows multiple copy-generation requests to be processed efficiently without blocking the application.
+
+### 📦 Batch Processing
+
+Generate copy for large numbers of products from JSON input files.
 
 ```bash
-# Clone or extract the project
-cd automated_copywriting_project
+python src/cli.py --batch \
+  --input-file examples/sample_inputs.json \
+  --output-file outputs/batch/results.json
+```
 
-# Run the setup script
-bash scripts/setup.sh
+### 🔄 Retry & Backoff
 
-# Or manually:
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env
-# Edit .env and add your GEMINI_API_KEY
+API failures are handled using:
+
+* Configurable retry attempts
+* Exponential backoff
+* Random jitter
+* Request timeouts
+* Concurrency control
+
+This makes API communication more resilient.
+
+### 🛡️ Brand Safety & Validation
+
+Generated content is validated before being returned.
+
+Validation can check:
+
+* Platform constraints
+* Character limits
+* Required fields
+* Brand-safety rules
+* Output structure
+* Generation parameters
+
+### 📋 Pydantic Validation
+
+Requests and responses use strongly typed Pydantic models.
+
+This provides structured data validation and clearer error handling.
+
+### 🖥️ CLI Interface
+
+Supports:
+
+* Interactive generation
+* Single-request generation
+* Batch processing
+
+### 📝 Structured Logging
+
+The project uses structured logging to make debugging and monitoring easier.
+
+---
+
+# 🏗️ Architecture
+
+```text
+                    ┌──────────────────────┐
+                    │     CLI / JSON       │
+                    │      Input           │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │    CopyRequest       │
+                    │      Pydantic        │
+                    │     Validation       │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │    PromptBuilder     │
+                    │ Platform + Tone +    │
+                    │ Audience + CTA Rules │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │   Async Handler      │
+                    │ Concurrency + Retry  │
+                    │   + Backoff          │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │      Gemini API      │
+                    │    AI Generation     │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │   Copy Validator     │
+                    │ Platform + Brand     │
+                    │      Rules           │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │    CopyResponse      │
+                    │   Structured JSON    │
+                    └──────────────────────┘
 ```
 
 ---
 
-## Environment Variables
+# 🛠️ Tech Stack
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `GEMINI_API_KEY` | Your Gemini API key | *(required)* |
-| `GEMINI_BASE_URL` | Gemini API endpoint | 
-| `GEMINI_MODEL` | Model to use | `Gemini-chat` |
-| `MAX_CONCURRENT_REQUESTS` | Async semaphore limit | `10` |
-| `REQUEST_TIMEOUT` | API request timeout (seconds) | `60` |
-| `RETRY_ATTEMPTS` | Number of retry attempts | `3` |
-| `BACKOFF_MULTIPLIER` | Exponential backoff base | `2.0` |
-| `JITTER_RANGE` | Random jitter range | `0.1` |
-| `DEFAULT_TEMPERATURE` | Default creativity level | `0.7` |
-| `DEFAULT_TOP_P` | Default nucleus sampling | `0.9` |
-| `DEFAULT_MAX_TOKENS` | Default token limit | `500` |
-| `LOG_LEVEL` | Logging verbosity | `INFO` |
+| Technology       | Purpose                   |
+| ---------------- | ------------------------- |
+| 🐍 Python        | Core application          |
+| 🤖 Google Gemini | AI copy generation        |
+| 📦 Pydantic      | Data validation           |
+| ⚡ asyncio        | Asynchronous processing   |
+| 🔄 Retry/Backoff | API resilience            |
+| 📝 Loguru        | Logging                   |
+| 🧪 Pytest        | Testing                   |
+| 📄 JSON          | Batch input/output        |
+| 🔐 python-dotenv | Environment configuration |
 
 ---
 
-## Usage
+# 📁 Project Structure
 
-### Interactive Mode
+```text
+automated-copywriting-project/
+│
+├── docs/
+│
+├── examples/
+│   └── sample_inputs.json
+│
+├── logs/
+│
+├── outputs/
+│
+├── prompts/
+│
+├── scripts/
+│
+├── src/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── cli.py
+│   ├── config.py
+│   ├── models.py
+│   ├── prompt_builder.py
+│   ├── generator.py
+│   ├── async_handler.py
+│   ├── validators.py
+│   └── utils.py
+│
+├── tests/
+│
+├── .env.example
+├── .gitignore
+├── app.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# ⚙️ Installation
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/Namra-ship-it/automated-copywriting-project.git
+
+cd automated-copywriting-project
+```
+
+## 2. Create a Virtual Environment
+
+### Windows
+
+```powershell
+python -m venv venv
+
+venv\Scripts\activate
+```
+
+### macOS / Linux
+
+```bash
+python3 -m venv venv
+
+source venv/bin/activate
+```
+
+## 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+## 🖥️ Streamlit Web App
+
+The project also includes a Streamlit-based web interface for an interactive copywriting experience.
+
+Run the application with:
+
+```bash
+streamlit run app.py
+```
+
+Then open the local URL provided by Streamlit in your browser. 🚀
+
+---
+
+# ▶️ Usage
+
+
+## 4. Configure Environment Variables
+
+Copy the example environment file:
+
+```bash
+copy .env.example .env
+```
+
+On macOS/Linux:
+
+```bash
+cp .env.example .env
+```
+
+Then add your Gemini API configuration:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+GEMINI_MODEL=your_model_here
+
+MAX_CONCURRENT_REQUESTS=10
+REQUEST_TIMEOUT=60
+RETRY_ATTEMPTS=3
+
+BACKOFF_MULTIPLIER=2.0
+JITTER_RANGE=0.1
+
+DEFAULT_TEMPERATURE=0.7
+DEFAULT_TOP_P=0.9
+DEFAULT_MAX_TOKENS=500
+
+LOG_LEVEL=INFO
+```
+
+> ⚠️ Never commit your `.env` file or expose your API key publicly.
+
+---
+
+# ▶️ Usage
+
+## Interactive Mode
 
 ```bash
 python src/cli.py --interactive
 ```
 
-### Real-Time Single Request
+This allows you to provide copywriting parameters interactively.
+
+---
+
+## Single Request
+
+Example:
 
 ```bash
 python src/cli.py \
   --product "EcoCharge Pro" \
-  --description "A portable solar power bank with 20000mAh capacity, waterproof, and built-in LED flashlight" \
+  --description "A portable solar power bank with 20000mAh capacity, waterproof design, and built-in LED flashlight" \
   --platform Instagram \
   --tone "Eco-conscious" \
   --audience "Outdoor enthusiasts and eco-friendly travelers" \
-  --cta "Shop now and go green" \
-  --temperature 0.8 \
-  --top-p 0.9
+  --cta "Shop now and go green"
 ```
 
-### Batch Processing
+---
+
+## Batch Processing
+
+Prepare a JSON file containing multiple copywriting requests:
 
 ```bash
-# From a JSON file
-python src/cli.py --batch --input-file examples/sample_inputs.json --output-file outputs/batch/results.json
-
-# Or use the batch script
-bash scripts/run_batch.sh
+python src/cli.py \
+  --batch \
+  --input-file examples/sample_inputs.json \
+  --output-file outputs/batch/results.json
 ```
 
-### Programmatic Usage
+This is useful when generating content for large product catalogs or marketing campaigns.
+
+---
+
+# 🧩 Programmatic Usage
+
+The generator can also be used directly from Python:
 
 ```python
 import asyncio
+
 from src.models import CopyRequest, Platform, Tone
 from src.generator import CopyGenerator
 
+
 async def main():
+
     request = CopyRequest(
         product_name="EcoCharge Pro",
-        product_description="Portable solar power bank...",
+        product_description=(
+            "Portable solar power bank with 20000mAh capacity"
+        ),
         platform=Platform.INSTAGRAM,
         tone=Tone.ECO_CONSCIOUS,
         target_audience="Outdoor enthusiasts",
@@ -152,17 +398,20 @@ async def main():
     )
 
     generator = CopyGenerator()
+
     response = await generator.generate_async(request)
+
     print(response.copy)
+
 
 asyncio.run(main())
 ```
 
 ---
 
-## Output Format
+# 📤 Example Output
 
-All responses follow this JSON schema:
+The application returns structured data rather than unstructured text:
 
 ```json
 {
@@ -171,75 +420,141 @@ All responses follow this JSON schema:
   "temperature_used": 0.8,
   "top_p_used": 0.9,
   "character_count": 450,
-  "copy": "Your generated marketing copy here...",
+  "copy": "Power your adventures with cleaner energy...",
   "subject_line": null,
-  "hashtags": ["#EcoFriendly", "#SolarPower", "#OutdoorLife"],
+  "hashtags": [
+    "#EcoFriendly",
+    "#SolarPower",
+    "#OutdoorLife"
+  ],
   "validation_passed": true,
   "validation_errors": [],
-  "model_used": "deepseek-chat"
+  "model_used": "gemini"
 }
 ```
 
 ---
 
-## Testing
+# 🧪 Testing
+
+Run the complete test suite:
 
 ```bash
-# Run all tests
 pytest tests/ -v
+```
 
-# With coverage
+Run with coverage:
+
+```bash
 pytest tests/ --cov=src --cov-report=html
+```
 
-# Specific test file
+Run a specific test:
+
+```bash
 pytest tests/test_models.py -v
 ```
 
 ---
 
-## Project Structure
+# 🔧 Configuration
 
-```
-automated_copywriting_project/
-├── README.md
-├── requirements.txt
-├── .env.example
-├── .gitignore
-├── src/
-│   ├── __init__.py
-│   ├── main.py          # Entry points and orchestration
-│   ├── cli.py           # Command-line interface
-│   ├── config.py        # Configuration management
-│   ├── models.py        # Pydantic data models
-│   ├── prompt_builder.py # Prompt template engine
-│   ├── generator.py     # Gemini API integration
-│   ├── async_handler.py # Concurrency & retry logic
-│   ├── batch_handler.py # Batch processing orchestrator
-│   ├── validator.py     # Output validation & brand safety
-│   └── utils.py         # Utility functions
-├── prompts/
-│   ├── master_template.txt
-│   ├── platform_instructions.json
-│   └── brand_guidelines.txt
-├── tests/               # Pytest test suite
-├── examples/            # Sample inputs per platform
-├── outputs/             # Generated results
-├── logs/                # Application logs
-├── scripts/             # Shell scripts for common tasks
-└── docs/                # Architecture & deployment docs
-```
+The application is designed to keep operational settings outside the source code.
+
+| Variable                  | Purpose                       |
+| ------------------------- | ----------------------------- |
+| `GEMINI_API_KEY`          | Gemini authentication         |
+| `GEMINI_MODEL`            | Gemini model selection        |
+| `MAX_CONCURRENT_REQUESTS` | Maximum simultaneous requests |
+| `REQUEST_TIMEOUT`         | API timeout                   |
+| `RETRY_ATTEMPTS`          | Number of retries             |
+| `BACKOFF_MULTIPLIER`      | Retry backoff multiplier      |
+| `JITTER_RANGE`            | Retry jitter                  |
+| `DEFAULT_TEMPERATURE`     | Generation creativity         |
+| `DEFAULT_TOP_P`           | Nucleus sampling              |
+| `DEFAULT_MAX_TOKENS`      | Maximum generated tokens      |
+| `LOG_LEVEL`               | Logging verbosity             |
 
 ---
 
-## License
+# 🎯 Design Goals
 
-MIT License - See LICENSE file for details.
+The project was built around several principles:
+
+**1. Structured generation**
+
+AI output should be predictable and machine-readable.
+
+**2. Platform awareness**
+
+Marketing copy should not be generated as one generic block and reused everywhere.
+
+**3. Reliability**
+
+External AI APIs can fail, so retry and timeout mechanisms are built into the generation pipeline.
+
+**4. Validation**
+
+Generated text should pass application-level checks before being returned.
+
+**5. Scalability**
+
+Batch processing and asynchronous execution allow the system to handle multiple generation requests efficiently.
 
 ---
 
-## Support
+# 🔮 Future Improvements
 
-For issues, questions, or contributions, please refer to the project documentation in `docs/` or open an issue on the project repository.
-=======
-# automated-copywriting-project
->>>>>>> bb3bad61115652f2d8aab5bde4efc9d476cd5062
+Potential next steps include:
+
+* [ ] Web-based dashboard
+* [ ] More social platforms
+* [ ] Brand voice profiles
+* [ ] Multiple copy variations per request
+* [ ] A/B testing support
+* [ ] SEO-focused generation
+* [ ] Content history
+* [ ] Database persistence
+* [ ] Streaming generation
+* [ ] Authentication & user accounts
+* [ ] Docker deployment
+* [ ] CI/CD pipeline
+* [ ] Production API deployment
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome.
+
+```bash
+git checkout -b feature/your-feature
+```
+
+Make your changes, add tests where appropriate, and submit a pull request.
+
+---
+
+# 📄 License
+
+This project is currently intended as an educational and portfolio project.
+
+See the repository for the latest licensing information.
+
+---
+
+# 👩‍💻 Author
+
+**Namra Malik**
+
+GitHub:
+https://github.com/Namra-ship-it
+
+---
+
+## ⭐ Support
+
+If you find this project useful, consider giving it a ⭐ on GitHub.
+
+**Repository:**
+https://github.com/Namra-ship-it/automated-copywriting-project

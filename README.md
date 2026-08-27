@@ -9,7 +9,7 @@ A production-ready Python application that automatically generates professional,
 
 - **Multi-Platform Support**: Generate copy optimized for LinkedIn, Instagram, and Email
 - **Tone Control**: Professional, Casual, Persuasive, Humorous, Inspirational, Eco-conscious, Adventurous
-- **DeepSeek AI Integration**: Powered by DeepSeek's advanced language models via OpenAI-compatible API
+- **Gemini AI Integration**: Powered by Gemini's advanced language models via OpenAI-compatible API
 - **Async Processing**: Handle multiple requests concurrently with configurable semaphore limits
 - **Batch Processing**: Process hundreds of requests from JSON input files
 - **Exponential Backoff**: Intelligent retry logic with jitter for resilient API calls
@@ -36,7 +36,7 @@ A production-ready Python application that automatically generates professional,
                                             └────────┬────────┘
                                                      │
                                             ┌────────▼────────┐
-                                            │  DeepSeek API   │
+                                            │  Gemini API   │
                                             │  (OpenAI SDK)   │
                                             └────────┬────────┘
                                                      │
@@ -59,7 +59,7 @@ A production-ready Python application that automatically generates professional,
 ### Prerequisites
 
 - Python 3.10+
-- DeepSeek API key ([Get one here](https://platform.deepseek.com/))
+- Gemini API key
 
 ### Quick Setup
 
@@ -75,7 +75,7 @@ python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
-# Edit .env and add your DEEPSEEK_API_KEY
+# Edit .env and add your GEMINI_API_KEY
 ```
 
 ---
@@ -84,9 +84,9 @@ cp .env.example .env
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `DEEPSEEK_API_KEY` | Your DeepSeek API key | *(required)* |
-| `DEEPSEEK_BASE_URL` | DeepSeek API endpoint | `https://api.deepseek.com/v1` |
-| `DEEPSEEK_MODEL` | Model to use | `deepseek-chat` |
+| `GEMINI_API_KEY` | Your Gemini API key | *(required)* |
+| `GEMINI_BASE_URL` | Gemini API endpoint | 
+| `GEMINI_MODEL` | Model to use | `Gemini-chat` |
 | `MAX_CONCURRENT_REQUESTS` | Async semaphore limit | `10` |
 | `REQUEST_TIMEOUT` | API request timeout (seconds) | `60` |
 | `RETRY_ATTEMPTS` | Number of retry attempts | `3` |
@@ -212,7 +212,7 @@ automated_copywriting_project/
 │   ├── config.py        # Configuration management
 │   ├── models.py        # Pydantic data models
 │   ├── prompt_builder.py # Prompt template engine
-│   ├── generator.py     # DeepSeek API integration
+│   ├── generator.py     # Gemini API integration
 │   ├── async_handler.py # Concurrency & retry logic
 │   ├── batch_handler.py # Batch processing orchestrator
 │   ├── validator.py     # Output validation & brand safety

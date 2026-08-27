@@ -35,7 +35,9 @@
       "Use bullet points for key features/benefits",
       "Clear, prominent CTA button/text",
       "Professional signature block",
-      "Subject line must be non-null and included in output"
+      "Subject line must be non-null and included in output",
+      "DO NOT include company names or specific branding",
+    "Use generic sign-off without company names"
     ]
   }
 }

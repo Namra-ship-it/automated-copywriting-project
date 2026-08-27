@@ -34,4 +34,10 @@ DECODELABS BRAND SAFETY & VOICE GUIDELINES
 === PLATFORM VOICE ===
 - LinkedIn: Expert, thought-leader, industry insider
 - Instagram: Visual storyteller, lifestyle curator, authentic friend
-- Email: Trusted advisor, personal connection, helpful guide
+-Email:
+- Clear, compelling subject line
+- Professional salutation
+- Scannable body with clear benefits
+- Strong, clear call-to-action
+- Generic sign-off: "Best regards," or "Regards,"
+- NO company names or specific branding

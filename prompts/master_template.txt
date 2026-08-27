@@ -23,7 +23,7 @@ Top_P: {top_p}
 
 ## BRAND SAFETY GUIDELINES (STRICTLY ENFORCED)
 
-1. DO maintain consistent brand voice aligned with DecodeLabs values
+1. DO maintain consistent brand voice aligned with the specified tone
 2. DO highlight the product's unique value proposition
 3. DO include the product name naturally within the first 2 sentences
 4. DO match tone exactly as specified
@@ -82,6 +82,7 @@ Your response MUST follow this exact JSON schema:
 
 Before final output, verify:
 - Does the tone match {tone}?
+- Is the sign-off generic (no company names)?
 - Is the product name mentioned within the first 2 sentences?
 - Is the CTA included?
 - Are all platform rules followed?

@@ -1,60 +1,72 @@
-# ✍️ Automated Copywriting & Tone Transformer
+# ✍️ CopyAlchemist — Automated AI Copywriting System
 
-> **AI-powered marketing copy generation with platform optimization, tone control, validation, async processing, and batch generation.**
+> **AI-powered marketing copy generation with platform optimization, tone control, validation, asynchronous processing, retry handling, and batch generation.**
 
-An intelligent Python-based copywriting system that transforms raw product information into **platform-specific, audience-aware marketing content**.
+**CopyAlchemist** is a modular Python-based AI copywriting system that transforms structured product information into **platform-specific, audience-aware marketing content**.
 
-The system uses Google's Gemini API to generate copy for platforms such as **LinkedIn, Instagram, and Email**, while applying configurable tones, character limits, CTAs, brand-safety rules, validation, retry handling, and structured output.
+The system integrates **Google Gemini** for content generation and combines it with Pydantic validation, configurable generation parameters, platform constraints, brand-safety checks, asynchronous processing, retry/backoff handling, structured logging, CLI workflows, and a Streamlit web interface.
 
 ---
 
-## 🚀 What It Does
+## ✨ Overview
 
-Instead of manually rewriting the same product description for every platform, this system automates the process:
+Creating marketing content for multiple platforms often requires repeatedly rewriting the same product information.
+
+CopyAlchemist automates that workflow.
 
 ```text
 Product Information
-        ↓
+        │
+        ▼
 Request Validation
-        ↓
+        │
+        ▼
 Prompt Construction
-        ↓
-Gemini AI Generation
-        ↓
-Platform & Brand Validation
-        ↓
+        │
+        ▼
+Async Generation
+        │
+        ▼
+Google Gemini
+        │
+        ▼
+Output Validation
+        │
+        ▼
 Structured Marketing Copy
 ```
 
-Give it:
+Provide:
 
 * Product name
 * Product description
 * Target audience
-* Platform
-* Tone
-* CTA
+* Marketing platform
+* Desired tone
+* Call-to-action
 * Generation parameters
 
-And it produces ready-to-use marketing copy.
+The system produces structured, platform-aware marketing copy ready for further use.
 
 ---
 
-## ✨ Key Features
+# 🚀 Key Features
 
-### 🎯 Multi-Platform Copy Generation
+### 🎯 Multi-Platform Generation
 
-Generate content optimized for:
+Generate marketing content tailored for:
 
-* 💼 LinkedIn
-* 📸 Instagram
-* 📧 Email
+* 💼 **LinkedIn**
+* 📸 **Instagram**
+* 📧 **Email**
 
-Each platform can apply its own formatting and content requirements.
+Platform-specific rules can be applied during prompt construction and output validation.
 
-### 🎨 Tone Control
+---
 
-Supported tones include:
+### 🎨 Configurable Tone
+
+CopyAlchemist supports multiple writing styles:
 
 * Professional
 * Casual
@@ -64,21 +76,39 @@ Supported tones include:
 * Eco-conscious
 * Adventurous
 
-### 🤖 Gemini AI Integration
+Tone is treated as a generation parameter rather than being hard-coded into the application.
 
-Uses Google's Gemini models for AI-powered content generation.
+---
 
-The model can be configured through environment variables, making it easy to switch models without modifying the application logic.
+### 🤖 Google Gemini Integration
+
+The system uses Google's Gemini API for AI-powered copy generation.
+
+The selected model is configurable through environment variables, allowing the model to be changed without modifying the core application logic.
+
+```env
+GEMINI_API_KEY=your_api_key_here
+GEMINI_MODEL=your_model_here
+```
+
+---
 
 ### ⚡ Asynchronous Processing
 
-Uses asynchronous request handling with configurable concurrency limits.
+Copy generation uses Python's asynchronous capabilities to process requests efficiently.
 
-This allows multiple copy-generation requests to be processed efficiently without blocking the application.
+Configurable concurrency limits help control the number of simultaneous API requests.
 
-### 📦 Batch Processing
+```env
+MAX_CONCURRENT_REQUESTS=10
+REQUEST_TIMEOUT=60
+```
 
-Generate copy for large numbers of products from JSON input files.
+---
+
+### 📦 Batch Generation
+
+Generate content for multiple products from a JSON input file.
 
 ```bash
 python src/cli.py --batch \
@@ -86,48 +116,88 @@ python src/cli.py --batch \
   --output-file outputs/batch/results.json
 ```
 
+This makes the system suitable for larger product catalogs and campaign workflows.
+
+---
+
 ### 🔄 Retry & Backoff
 
-API failures are handled using:
+External APIs can experience temporary failures.
 
-* Configurable retry attempts
+CopyAlchemist includes configurable resilience mechanisms:
+
+* Retry attempts
 * Exponential backoff
 * Random jitter
 * Request timeouts
 * Concurrency control
 
-This makes API communication more resilient.
+Example configuration:
 
-### 🛡️ Brand Safety & Validation
+```env
+RETRY_ATTEMPTS=3
+BACKOFF_MULTIPLIER=2.0
+JITTER_RANGE=0.1
+```
+
+---
+
+### 🛡️ Validation & Brand Safety
 
 Generated content is validated before being returned.
 
-Validation can check:
+Validation can cover:
 
+* Required fields
 * Platform constraints
 * Character limits
-* Required fields
 * Brand-safety rules
 * Output structure
 * Generation parameters
 
-### 📋 Pydantic Validation
+This provides an additional application-level quality and safety layer around AI-generated content.
 
-Requests and responses use strongly typed Pydantic models.
+---
 
-This provides structured data validation and clearer error handling.
+### 📋 Strongly Typed Data Models
 
-### 🖥️ CLI Interface
+Requests and responses use **Pydantic models**.
 
-Supports:
+This provides:
 
-* Interactive generation
-* Single-request generation
-* Batch processing
+* Input validation
+* Structured output
+* Type safety
+* Consistent error handling
+* Machine-readable responses
+
+---
+
+### 🖥️ Multiple Interfaces
+
+CopyAlchemist supports:
+
+**CLI**
+
+```bash
+python src/cli.py --interactive
+```
+
+**Streamlit Web App**
+
+```bash
+streamlit run app.py
+```
+
+**Python API**
+
+The core generation components can also be imported and used programmatically.
+
+---
 
 ### 📝 Structured Logging
 
-The project uses structured logging to make debugging and monitoring easier.
+The application uses structured logging to make development, debugging, and runtime monitoring easier.
 
 ---
 
@@ -135,42 +205,45 @@ The project uses structured logging to make debugging and monitoring easier.
 
 ```text
                     ┌──────────────────────┐
-                    │     CLI / JSON       │
-                    │      Input           │
+                    │   CLI / Streamlit    │
+                    │    / Python API      │
                     └──────────┬───────────┘
                                │
                                ▼
                     ┌──────────────────────┐
-                    │    CopyRequest       │
+                    │     CopyRequest      │
                     │      Pydantic        │
-                    │     Validation       │
+                    │      Validation      │
                     └──────────┬───────────┘
                                │
                                ▼
                     ┌──────────────────────┐
                     │    PromptBuilder     │
+                    │                      │
                     │ Platform + Tone +    │
-                    │ Audience + CTA Rules │
+                    │ Audience + CTA       │
                     └──────────┬───────────┘
                                │
                                ▼
                     ┌──────────────────────┐
-                    │   Async Handler      │
+                    │    Async Handler     │
+                    │                      │
                     │ Concurrency + Retry  │
-                    │   + Backoff          │
+                    │ + Backoff + Timeout  │
                     └──────────┬───────────┘
                                │
                                ▼
                     ┌──────────────────────┐
-                    │      Gemini API      │
+                    │     Gemini API       │
                     │    AI Generation     │
                     └──────────┬───────────┘
                                │
                                ▼
                     ┌──────────────────────┐
-                    │   Copy Validator     │
-                    │ Platform + Brand     │
-                    │      Rules           │
+                    │    Copy Validator    │
+                    │                      │
+                    │ Platform + Brand +   │
+                    │ Output Constraints   │
                     └──────────┬───────────┘
                                │
                                ▼
@@ -182,26 +255,10 @@ The project uses structured logging to make debugging and monitoring easier.
 
 ---
 
-# 🛠️ Tech Stack
-
-| Technology       | Purpose                   |
-| ---------------- | ------------------------- |
-| 🐍 Python        | Core application          |
-| 🤖 Google Gemini | AI copy generation        |
-| 📦 Pydantic      | Data validation           |
-| ⚡ asyncio        | Asynchronous processing   |
-| 🔄 Retry/Backoff | API resilience            |
-| 📝 Loguru        | Logging                   |
-| 🧪 Pytest        | Testing                   |
-| 📄 JSON          | Batch input/output        |
-| 🔐 python-dotenv | Environment configuration |
-
----
-
-# 📁 Project Structure
+# 🧩 Project Structure
 
 ```text
-automated-copywriting-project/
+CopyAlchemist_task-02_Namra-Malik/
 │
 ├── docs/
 │
@@ -237,17 +294,61 @@ automated-copywriting-project/
 └── README.md
 ```
 
+### Core Modules
+
+| Module              | Responsibility                                   |
+| ------------------- | ------------------------------------------------ |
+| `models.py`         | Pydantic request and response models             |
+| `config.py`         | Application and environment configuration        |
+| `prompt_builder.py` | Builds platform- and tone-aware prompts          |
+| `generator.py`      | Handles Gemini content generation                |
+| `async_handler.py`  | Async processing, concurrency and retry handling |
+| `validators.py`     | Validates generated copy                         |
+| `cli.py`            | Command-line interface                           |
+| `main.py`           | Application entry point                          |
+| `utils.py`          | Shared utility functionality                     |
+| `app.py`            | Streamlit web interface                          |
+| `tests/`            | Automated test suite                             |
+
+---
+
+# 🛠️ Technology Stack
+
+| Technology       | Purpose                          |
+| ---------------- | -------------------------------- |
+| 🐍 Python        | Core application                 |
+| 🤖 Google Gemini | AI copy generation               |
+| 📦 Pydantic      | Data validation and typed models |
+| ⚡ `asyncio`      | Asynchronous processing          |
+| 🔄 Retry/Backoff | API resilience                   |
+| 📝 Loguru        | Structured logging               |
+| 🧪 Pytest        | Automated testing                |
+| 📄 JSON          | Batch input/output               |
+| 🔐 python-dotenv | Environment configuration        |
+| 🎈 Streamlit     | Interactive web interface        |
+
 ---
 
 # ⚙️ Installation
 
+## Prerequisites
+
+Make sure the following are installed:
+
+* Python 3.10+
+* pip
+* A Google Gemini API key
+
+---
+
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Namra-ship-it/automated-copywriting-project.git
-
-cd automated-copywriting-project
+git clone https://github.com/Namra-ship-it/CopyAlchemist_task-02_Namra-Malik.git
+cd CopyAlchemist_task-02_Namra-Malik
 ```
+
+---
 
 ## 2. Create a Virtual Environment
 
@@ -255,7 +356,6 @@ cd automated-copywriting-project
 
 ```powershell
 python -m venv venv
-
 venv\Scripts\activate
 ```
 
@@ -263,47 +363,36 @@ venv\Scripts\activate
 
 ```bash
 python3 -m venv venv
-
 source venv/bin/activate
 ```
+
+---
 
 ## 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
-## 🖥️ Streamlit Web App
-
-The project also includes a Streamlit-based web interface for an interactive copywriting experience.
-
-Run the application with:
-
-```bash
-streamlit run app.py
-```
-
-Then open the local URL provided by Streamlit in your browser. 🚀
 
 ---
 
-# ▶️ Usage
+# 🔑 Configuration
 
+Create your environment file from the provided template.
 
-## 4. Configure Environment Variables
+### Windows
 
-Copy the example environment file:
-
-```bash
+```powershell
 copy .env.example .env
 ```
 
-On macOS/Linux:
+### macOS / Linux
 
 ```bash
 cp .env.example .env
 ```
 
-Then add your Gemini API configuration:
+Then configure your environment:
 
 ```env
 GEMINI_API_KEY=your_api_key_here
@@ -323,19 +412,37 @@ DEFAULT_MAX_TOKENS=500
 LOG_LEVEL=INFO
 ```
 
-> ⚠️ Never commit your `.env` file or expose your API key publicly.
+> 🔐 **Never commit `.env` or expose your Gemini API key.**
 
 ---
 
-# ▶️ Usage
+# 🖥️ Streamlit Web Application
+
+CopyAlchemist includes an interactive Streamlit interface.
+
+Start the application with:
+
+```bash
+streamlit run app.py
+```
+
+Streamlit will display a local URL in the terminal.
+
+Open that URL in your browser to access the web interface.
+
+---
+
+# 💻 CLI Usage
 
 ## Interactive Mode
+
+Run:
 
 ```bash
 python src/cli.py --interactive
 ```
 
-This allows you to provide copywriting parameters interactively.
+The interactive workflow allows you to provide copywriting parameters directly through the terminal.
 
 ---
 
@@ -357,7 +464,7 @@ python src/cli.py \
 
 ## Batch Processing
 
-Prepare a JSON file containing multiple copywriting requests:
+Prepare a JSON file containing multiple requests:
 
 ```bash
 python src/cli.py \
@@ -366,13 +473,18 @@ python src/cli.py \
   --output-file outputs/batch/results.json
 ```
 
-This is useful when generating content for large product catalogs or marketing campaigns.
+Batch processing is useful for:
+
+* Product catalogs
+* Marketing campaigns
+* Multiple audience segments
+* Large-scale content generation
 
 ---
 
-# 🧩 Programmatic Usage
+# 🐍 Programmatic Usage
 
-The generator can also be used directly from Python:
+The generation system can also be used directly from Python:
 
 ```python
 import asyncio
@@ -382,7 +494,6 @@ from src.generator import CopyGenerator
 
 
 async def main():
-
     request = CopyRequest(
         product_name="EcoCharge Pro",
         product_description=(
@@ -404,14 +515,17 @@ async def main():
     print(response.copy)
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
 
 ---
 
-# 📤 Example Output
+# 📤 Structured Output
 
-The application returns structured data rather than unstructured text:
+CopyAlchemist returns structured data rather than only raw generated text.
+
+Example:
 
 ```json
 {
@@ -433,6 +547,8 @@ The application returns structured data rather than unstructured text:
 }
 ```
 
+This makes the output suitable for both human use and downstream applications.
+
 ---
 
 # 🧪 Testing
@@ -443,103 +559,158 @@ Run the complete test suite:
 pytest tests/ -v
 ```
 
-Run with coverage:
+### Run with Coverage
 
 ```bash
 pytest tests/ --cov=src --cov-report=html
 ```
 
-Run a specific test:
+### Run a Specific Test
 
 ```bash
 pytest tests/test_models.py -v
 ```
 
----
-
-# 🔧 Configuration
-
-The application is designed to keep operational settings outside the source code.
-
-| Variable                  | Purpose                       |
-| ------------------------- | ----------------------------- |
-| `GEMINI_API_KEY`          | Gemini authentication         |
-| `GEMINI_MODEL`            | Gemini model selection        |
-| `MAX_CONCURRENT_REQUESTS` | Maximum simultaneous requests |
-| `REQUEST_TIMEOUT`         | API timeout                   |
-| `RETRY_ATTEMPTS`          | Number of retries             |
-| `BACKOFF_MULTIPLIER`      | Retry backoff multiplier      |
-| `JITTER_RANGE`            | Retry jitter                  |
-| `DEFAULT_TEMPERATURE`     | Generation creativity         |
-| `DEFAULT_TOP_P`           | Nucleus sampling              |
-| `DEFAULT_MAX_TOKENS`      | Maximum generated tokens      |
-| `LOG_LEVEL`               | Logging verbosity             |
+The test suite covers core application behavior including models, generation logic, validation, and supporting components.
 
 ---
 
-# 🎯 Design Goals
+# ⚙️ Configuration Reference
 
-The project was built around several principles:
-
-**1. Structured generation**
-
-AI output should be predictable and machine-readable.
-
-**2. Platform awareness**
-
-Marketing copy should not be generated as one generic block and reused everywhere.
-
-**3. Reliability**
-
-External AI APIs can fail, so retry and timeout mechanisms are built into the generation pipeline.
-
-**4. Validation**
-
-Generated text should pass application-level checks before being returned.
-
-**5. Scalability**
-
-Batch processing and asynchronous execution allow the system to handle multiple generation requests efficiently.
+| Variable                  | Description                    | Example        |
+| ------------------------- | ------------------------------ | -------------- |
+| `GEMINI_API_KEY`          | Gemini authentication key      | `your_api_key` |
+| `GEMINI_MODEL`            | Gemini model to use            | `your_model`   |
+| `MAX_CONCURRENT_REQUESTS` | Maximum simultaneous requests  | `10`           |
+| `REQUEST_TIMEOUT`         | API request timeout            | `60`           |
+| `RETRY_ATTEMPTS`          | Number of retry attempts       | `3`            |
+| `BACKOFF_MULTIPLIER`      | Retry backoff multiplier       | `2.0`          |
+| `JITTER_RANGE`            | Random retry jitter            | `0.1`          |
+| `DEFAULT_TEMPERATURE`     | Default generation temperature | `0.7`          |
+| `DEFAULT_TOP_P`           | Default nucleus sampling value | `0.9`          |
+| `DEFAULT_MAX_TOKENS`      | Maximum generated tokens       | `500`          |
+| `LOG_LEVEL`               | Logging level                  | `INFO`         |
 
 ---
 
-# 🔮 Future Improvements
+# 🛡️ Reliability & Safety
 
-Potential next steps include:
+CopyAlchemist is designed to account for common problems associated with external AI APIs and generated content.
 
-* [ ] Web-based dashboard
-* [ ] More social platforms
-* [ ] Brand voice profiles
-* [ ] Multiple copy variations per request
-* [ ] A/B testing support
-* [ ] SEO-focused generation
-* [ ] Content history
-* [ ] Database persistence
-* [ ] Streaming generation
-* [ ] Authentication & user accounts
-* [ ] Docker deployment
-* [ ] CI/CD pipeline
-* [ ] Production API deployment
+### API Reliability
+
+* Configurable timeouts
+* Retry attempts
+* Exponential backoff
+* Random jitter
+* Concurrency limits
+
+### Input Safety
+
+* Pydantic request validation
+* Strongly typed parameters
+* Required-field validation
+
+### Output Quality
+
+* Platform constraint validation
+* Character-limit validation
+* Structured response validation
+* Brand-safety checks
+
+### Credential Security
+
+API credentials are loaded through environment variables rather than being embedded in source code.
+
+---
+
+# 🎯 Design Principles
+
+### 1. Platform-Aware Generation
+
+Content should be adapted to its intended platform rather than treating every channel identically.
+
+### 2. Structured AI Output
+
+Generated content should be predictable and machine-readable.
+
+### 3. Separation of Concerns
+
+Generation, validation, configuration, prompt construction, and interface logic are separated into dedicated modules.
+
+### 4. Resilient API Communication
+
+External AI services can fail temporarily, so retries, backoff, timeouts, and concurrency controls are part of the architecture.
+
+### 5. Configurable Behavior
+
+Operational settings are controlled through environment variables rather than hard-coded application logic.
+
+---
+
+# 📈 Potential Extensions
+
+The modular architecture allows the system to be extended with:
+
+* Additional social platforms
+* Brand voice profiles
+* Multiple copy variations
+* A/B testing
+* SEO-focused generation
+* Content history
+* Database persistence
+* Streaming generation
+* Authentication
+* User accounts
+* Docker deployment
+* CI/CD automation
+* Production API deployment
+
+---
+
+# 🔐 Security Guidelines
+
+Never commit:
+
+```text
+.env
+API keys
+credentials
+private configuration
+generated runtime secrets
+```
+
+Use:
+
+```text
+.env.example
+```
+
+for sharing configuration structure without exposing credentials.
+
+If an API key is accidentally committed, **revoke and rotate it immediately**.
 
 ---
 
 # 🤝 Contributing
 
-Contributions are welcome.
+Contributions and improvements are welcome.
+
+Create a feature branch:
 
 ```bash
 git checkout -b feature/your-feature
 ```
 
-Make your changes, add tests where appropriate, and submit a pull request.
+Make your changes, add or update tests where appropriate, and submit a pull request.
 
 ---
 
-# 📄 License
+# 📌 Project Status
 
-This project is currently intended as an educational and portfolio project.
+**Status:** Active educational / portfolio project
 
-See the repository for the latest licensing information.
+The core system provides AI generation, validation, asynchronous processing, batch workflows, CLI usage, and an interactive Streamlit interface.
 
 ---
 
@@ -552,9 +723,16 @@ https://github.com/Namra-ship-it
 
 ---
 
-## ⭐ Support
+# ⭐ Repository
 
-If you find this project useful, consider giving it a ⭐ on GitHub.
+**CopyAlchemist — Task 02**
 
-**Repository:**
-https://github.com/Namra-ship-it/automated-copywriting-project
+https://github.com/Namra-ship-it/CopyAlchemist_task-02_Namra-Malik
+
+If you find the project useful, consider giving it a ⭐ on GitHub.
+
+---
+
+## 📄 License
+
+This project was developed as part of **Task 02** and is intended for educational, portfolio, and project-evaluation purposes.
